@@ -5,6 +5,10 @@ class GildedRose {
     private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+    public static final int BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY = 10;
+    public static final int BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY = 5;
+    public static final int THRESHOLD_ON_SELL_IN_EXPIRED = 0;
+    public static final int BACKSTAGE_NO_QUALITY = 0;
 
     private final Item[] items;
 
@@ -15,42 +19,46 @@ class GildedRose {
     public void updateQuality() {
         for (Item item : items) {
             switch (item.name) {
-                case GildedRose.SULFURAS:
+                case SULFURAS:
                     break;
 
-                case GildedRose.AGED_BRIE:
+                case AGED_BRIE:
                     increaseQuality(item);
-                    item.sellIn--;
-                    if (item.sellIn < 0) {
+                    reduceSellInDays(item);
+                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
                         increaseQuality(item);
                     }
                     break;
 
-                case GildedRose.BACKSTAGE:
+                case BACKSTAGE:
                     increaseQuality(item);
 
-                    if (item.sellIn < 11) {
+                    if (item.sellIn <= BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY) {
                         increaseQuality(item);
                     }
 
-                    if (item.sellIn < 6) {
+                    if (item.sellIn <= BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY) {
                         increaseQuality(item);
                     }
 
-                    item.sellIn--;
-                    if (item.sellIn < 0) {
-                        item.quality = 0;
+                    reduceSellInDays(item);
+                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
+                        item.quality = BACKSTAGE_NO_QUALITY;
                     }
                     break;
                 default:
                     reduceQuality(item);
-                    item.sellIn--;
+                    reduceSellInDays(item);
 
-                    if (item.sellIn < 0) {
+                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
                         reduceQuality(item);
                     }
             }
         }
+    }
+
+    private static void reduceSellInDays(Item item) {
+        item.sellIn--;
     }
 
     private static void reduceQuality(Item item) {
