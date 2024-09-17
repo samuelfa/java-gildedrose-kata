@@ -43,18 +43,19 @@ class GildedRose {
                     }
                     break;
                 default:
-                    if (item.quality > 0) {
-                        item.quality--;
-                    }
+                    reduceQuality(item);
                     item.sellIn--;
 
-
                     if (item.sellIn < 0) {
-                        if (item.quality > 0) {
-                            item.quality--;
-                        }
+                        reduceQuality(item);
                     }
             }
+        }
+    }
+
+    private static void reduceQuality(Item item) {
+        if (item.quality > 0) {
+            item.quality--;
         }
     }
 
