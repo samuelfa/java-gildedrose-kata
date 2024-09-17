@@ -8,7 +8,8 @@ class GildedRose {
     public static final int BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY = 10;
     public static final int BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY = 5;
     public static final int THRESHOLD_ON_SELL_IN_EXPIRED = 0;
-    public static final int NO_QUALITY = 0;
+    public static final int THRESHOLD_MIN_QUALITY = 0;
+    public static final int THRESHOLD_MAX_QUALITY = 50;
 
     private final Item[] items;
 
@@ -48,7 +49,7 @@ class GildedRose {
         }
 
         if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-            item.quality = NO_QUALITY;
+            item.quality = THRESHOLD_MIN_QUALITY;
         }
     }
 
@@ -75,13 +76,13 @@ class GildedRose {
     }
 
     private static void reduceQuality(Item item) {
-        if (item.quality > 0) {
+        if (item.quality > THRESHOLD_MIN_QUALITY) {
             item.quality--;
         }
     }
 
     private static void increaseQuality(Item item) {
-        if (item.quality < 50) {
+        if (item.quality < THRESHOLD_MAX_QUALITY) {
             item.quality++;
         }
     }
