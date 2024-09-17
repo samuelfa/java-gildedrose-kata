@@ -1,7 +1,7 @@
 package tv.codely.kata.gildedrose;
 
 class GildedRose {
-    Item[] items;
+    private final Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
