@@ -19,33 +19,24 @@ class GildedRose {
                     break;
 
                 case GildedRose.AGED_BRIE:
-                    if (item.quality < 50) {
-                        item.quality++;
-                    }
+                    increaseQuality(item);
                     item.sellIn--;
                     if (item.sellIn < 0) {
-                        if (item.quality < 50) {
-                            item.quality++;
-                        }
+                        increaseQuality(item);
                     }
                     break;
 
                 case GildedRose.BACKSTAGE:
-                    if (item.quality < 50) {
-                        item.quality++;
+                    increaseQuality(item);
 
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality++;
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality++;
-                            }
-                        }
+                    if (item.sellIn < 11) {
+                        increaseQuality(item);
                     }
+
+                    if (item.sellIn < 6) {
+                        increaseQuality(item);
+                    }
+
                     item.sellIn--;
                     if (item.sellIn < 0) {
                         item.quality = 0;
@@ -64,6 +55,12 @@ class GildedRose {
                         }
                     }
             }
+        }
+    }
+
+    private static void increaseQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality++;
         }
     }
 }
