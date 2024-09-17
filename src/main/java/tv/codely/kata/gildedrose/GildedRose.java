@@ -23,38 +23,50 @@ class GildedRose {
                     break;
 
                 case AGED_BRIE:
-                    reduceSellInDays(item);
-                    increaseQuality(item);
-
-                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-                        increaseQuality(item);
-                    }
+                    onAgedBrieUpdateQuality(item);
                     break;
 
                 case BACKSTAGE:
-                    reduceSellInDays(item);
-                    increaseQuality(item);
-
-                    if (item.sellIn < BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY) {
-                        increaseQuality(item);
-                    }
-
-                    if (item.sellIn < BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY) {
-                        increaseQuality(item);
-                    }
-
-                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-                        item.quality = NO_QUALITY;
-                    }
+                    onBackstageUpdateQuality(item);
                     break;
                 default:
-                    reduceSellInDays(item);
-                    reduceQuality(item);
-
-                    if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-                        reduceQuality(item);
-                    }
+                    onDefaultItemUpdateQuality(item);
             }
+        }
+    }
+
+    private static void onBackstageUpdateQuality(Item item) {
+        reduceSellInDays(item);
+        increaseQuality(item);
+
+        if (item.sellIn < BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY) {
+            increaseQuality(item);
+        }
+
+        if (item.sellIn < BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY) {
+            increaseQuality(item);
+        }
+
+        if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
+            item.quality = NO_QUALITY;
+        }
+    }
+
+    private static void onDefaultItemUpdateQuality(Item item) {
+        reduceSellInDays(item);
+        reduceQuality(item);
+
+        if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
+            reduceQuality(item);
+        }
+    }
+
+    private static void onAgedBrieUpdateQuality(Item item) {
+        reduceSellInDays(item);
+        increaseQuality(item);
+
+        if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
+            increaseQuality(item);
         }
     }
 
