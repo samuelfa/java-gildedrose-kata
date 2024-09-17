@@ -8,7 +8,7 @@ class GildedRose {
     public static final int BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY = 10;
     public static final int BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY = 5;
     public static final int THRESHOLD_ON_SELL_IN_EXPIRED = 0;
-    public static final int BACKSTAGE_NO_QUALITY = 0;
+    public static final int NO_QUALITY = 0;
 
     private final Item[] items;
 
@@ -23,32 +23,33 @@ class GildedRose {
                     break;
 
                 case AGED_BRIE:
-                    increaseQuality(item);
                     reduceSellInDays(item);
+                    increaseQuality(item);
+
                     if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
                         increaseQuality(item);
                     }
                     break;
 
                 case BACKSTAGE:
+                    reduceSellInDays(item);
                     increaseQuality(item);
 
-                    if (item.sellIn <= BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY) {
+                    if (item.sellIn < BACKSTAGE_THRESHOLD_INC_DOUBLE_QUALITY) {
                         increaseQuality(item);
                     }
 
-                    if (item.sellIn <= BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY) {
+                    if (item.sellIn < BACKSTAGE_THRESHOLD_INC_TRIPLE_QUALITY) {
                         increaseQuality(item);
                     }
 
-                    reduceSellInDays(item);
                     if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-                        item.quality = BACKSTAGE_NO_QUALITY;
+                        item.quality = NO_QUALITY;
                     }
                     break;
                 default:
-                    reduceQuality(item);
                     reduceSellInDays(item);
+                    reduceQuality(item);
 
                     if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
                         reduceQuality(item);
