@@ -1,6 +1,11 @@
 package tv.codely.kata.gildedrose;
 
 class GildedRose {
+
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+
     private final Item[] items;
 
     public GildedRose(Item[] items) {
@@ -9,50 +14,55 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                continue;
-            } else if (item.name.equals("Aged Brie")) {
-                if (item.quality < 50) {
-                    item.quality++;
-                }
-                item.sellIn = item.sellIn - 1;
-                if (item.sellIn < 0) {
+            switch (item.name) {
+                case GildedRose.SULFURAS:
+                    break;
+
+                case GildedRose.AGED_BRIE:
                     if (item.quality < 50) {
                         item.quality++;
                     }
-                }
-            } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (item.quality < 50) {
-                    item.quality++;
-
-                    if (item.sellIn < 11) {
+                    item.sellIn = item.sellIn - 1;
+                    if (item.sellIn < 0) {
                         if (item.quality < 50) {
                             item.quality++;
                         }
                     }
+                    break;
 
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality++;
+                case GildedRose.BACKSTAGE:
+                    if (item.quality < 50) {
+                        item.quality++;
+
+                        if (item.sellIn < 11) {
+                            if (item.quality < 50) {
+                                item.quality++;
+                            }
+                        }
+
+                        if (item.sellIn < 6) {
+                            if (item.quality < 50) {
+                                item.quality++;
+                            }
                         }
                     }
-                }
-                item.sellIn = item.sellIn - 1;
-                if (item.sellIn < 0) {
-                    item.quality = 0;
-                }
-            } else {
-                if (item.quality > 0) {
-                    item.quality--;
-                }
-                item.sellIn = item.sellIn - 1;
-
-
-                if (item.sellIn < 0) {
+                    item.sellIn = item.sellIn - 1;
+                    if (item.sellIn < 0) {
+                        item.quality = 0;
+                    }
+                    break;
+                default:
                     if (item.quality > 0) {
                         item.quality--;
                     }
-                }
+                    item.sellIn = item.sellIn - 1;
+
+
+                    if (item.sellIn < 0) {
+                        if (item.quality > 0) {
+                            item.quality--;
+                        }
+                    }
             }
         }
     }
