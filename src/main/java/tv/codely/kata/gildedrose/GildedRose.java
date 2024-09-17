@@ -30,9 +30,19 @@ class GildedRose {
                 case BACKSTAGE:
                     onBackstageUpdateQuality(item);
                     break;
+
                 default:
                     onDefaultItemUpdateQuality(item);
             }
+        }
+    }
+
+    private static void onAgedBrieUpdateQuality(Item item) {
+        reduceSellInDays(item);
+        increaseQuality(item);
+
+        if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
+            increaseQuality(item);
         }
     }
 
@@ -59,15 +69,6 @@ class GildedRose {
 
         if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
             reduceQuality(item);
-        }
-    }
-
-    private static void onAgedBrieUpdateQuality(Item item) {
-        reduceSellInDays(item);
-        increaseQuality(item);
-
-        if (item.sellIn < THRESHOLD_ON_SELL_IN_EXPIRED) {
-            increaseQuality(item);
         }
     }
 
