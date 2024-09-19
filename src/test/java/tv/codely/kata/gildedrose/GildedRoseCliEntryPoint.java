@@ -1,7 +1,10 @@
 package tv.codely.kata.gildedrose;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 public class GildedRoseCliEntryPoint {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, InvocationTargetException, NoSuchMethodException {
         System.out.println("OMGHAI!");
 
         Item[] items = new Item[] {
